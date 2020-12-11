@@ -1,0 +1,32 @@
+{
+    "name": "hello-world",
+    "description": "Sample NodeJs web application",
+    "version": "0.0.1",
+    "private": true,
+    "devDependencies": {
+        "mocha": "^5.0.0",
+        "unit.js": "^2.1.1"
+    },
+    "config": {
+        "ntba_fix_319": 1
+    },
+    "scripts": {
+        "test": "./setup-env.sh 'mocha --recursive tests'",
+        "predeploy": "./setup-env.sh 'mocha --recursive tests'",
+        "deploy": "git push origin master",
+        "print:env": "echo $API_GATEWAY_URL; echo $TELEGRAM_TOKEN",
+        "setup:webhook": "echo bot$TELEGRAM_TOKEN; curl -F \"url=$API_GATEWAY_URL/webhook\" https://api.telegram.org/bot$TELEGRAM_TOKEN/setWebhook",
+        "setup:webhook:info": "echo bot$TELEGRAM_TOKEN; curl https://api.telegram.org/bot$npm_package_config_telegram_token/getWebhookInfo",
+        "logs:last-stream": "aws logs describe-log-streams --log-group-name '/aws/lambda/awscodestar-cashly-bot-lambda-cashly-bot-webhook' --query 'logStreams[*].logStreamName' --max-items 1 --order-by LastEventTime --descending",
+        "logs": "aws logs get-log-events --log-group-name '/aws/lambda/awscodestar-cashly-bot-lambda-cashly-bot-webhook' --log-stream-name `aws logs describe-log-streams --log-group-name '/aws/lambda/awscodestar-cashly-bot-lambda-cashly-bot-webhook' --max-items 1 --order-by LastEventTime --descending --query logStreams[].logStreamName --output text | head -n 1` --query events[].message --output text",
+        "start:local-api": "sam build; sam local start-api",
+        "pipeline:status": "aws codepipeline get-pipeline-state --name cashly-bot-Pipeline | jq '.stageStates[] | {name: .stageName, action: [.actionStates[].actionName], status: [.actionStates[].latestExecution.status]}'"
+    },
+    "dependencies": {
+        "aws-sdk": "^2.778.0",
+        "lodash": "^4.17.20",
+        "moment": "^2.29.1",
+        "mysql": "^2.18.1",
+        "node-telegram-bot-api": "^0.50.0"
+    }
+}
