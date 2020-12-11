@@ -30,14 +30,6 @@ Parameters:
     MaxLength: '41'
     AllowedPattern: '[a-zA-Z0-9]*'
     ConstraintDescription: must contain only alphanumeric characters.
-  TelegramToken:
-    NoEcho: 'true'
-    Description: Password MySQL database access
-    Type: String
-    MinLength: '8'
-    MaxLength: '41'
-    AllowedPattern: '[a-zA-Z0-9]*'
-    ConstraintDescription: must contain only alphanumeric characters.
 Globals:
   Function:
     AutoPublishAlias: live
@@ -70,7 +62,7 @@ Resources:
       Runtime: nodejs12.x
       Environment:
         Variables:
-          TELEGRAM_TOKEN: !Ref TelegramToken
+          TELEGRAM_TOKEN: '{{resolve:secretsmanager:TelegramToken}}'
           NTBA_FIX_319: 1
       Role:
         Fn::GetAtt:
