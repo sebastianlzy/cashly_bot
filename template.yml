@@ -64,7 +64,7 @@ Resources:
         Variables:
           TELEGRAM_TOKEN: !Sub '{{resolve:secretsmanager:${TelegramTokenSecret}}}'
           RDS_SECRET_ARN: !Ref RDSClusterRotationSecret
-          RDS_RESOURCE_ARN: !Ref RDSCluster
+          RDS_RESOURCE_ARN: !Sub "arn:${AWS::Partition}:rds:${AWS::Region}:${AWS::AccountId}:cluster:${RDSCluster}"
           NTBA_FIX_319: 1
       Role:
         Fn::GetAtt:

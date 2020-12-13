@@ -9,8 +9,8 @@ const rdsDataService = new AWS.RDSDataService()
 
 const createSqlParams = (sql) => {
     return {
-        secretArn: process.env.RDS_SECRET_ARN ||  'arn:aws:secretsmanager:ap-southeast-1:575693935124:secret:rds-db-credentials/cluster-YVNPYBSET57YMFS2FTGOQ2OPZU/admin-Z5EyRV',
-        resourceArn: process.env.RDS_RESOURCE_ARN || 'arn:aws:rds:ap-southeast-1:575693935124:cluster:cashly-bot-rds-cluster',
+        secretArn: process.env.RDS_SECRET_ARN,
+        resourceArn: process.env.RDS_RESOURCE_ARN,
         sql: sql,
         database: 'cashly_db',
         includeResultMetadata: true
@@ -59,10 +59,6 @@ const executeSqlStatement = (sqlParams) => {
     return new Promise((resolve, reject) => {
         console.log(sqlParams)
         return rdsDataService.executeStatement(sqlParams, function (err, data) {
-            console.log("--------------------db.js--67-data----------------------------")
-            console.log(data)
-            console.log("--------------------db.js--67-data---------------------------")
-
             if (err) {
                 // error
                 console.log(err)
