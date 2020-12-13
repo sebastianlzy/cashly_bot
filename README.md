@@ -109,7 +109,11 @@ aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambda_FullAc
 Update pipeline to update/create cashly-bot stack
 ```
 # Go to https://ap-southeast-1.console.aws.amazon.com/codesuite/codepipeline/pipelines/cashly-bot-Pipeline/view?region=ap-southeast-1
-> 
+> https://ap-southeast-1.console.aws.amazon.com/codesuite/codepipeline/pipelines/cashly-bot-Pipeline/view?region=ap-southeast-1 > edit > Edit:Deploy > Edit Stage > GenerateChangeSet > edit
+> Update stackname to `cashly-bot`
+
+> https://ap-southeast-1.console.aws.amazon.com/codesuite/codepipeline/pipelines/cashly-bot-Pipeline/view?region=ap-southeast-1 > edit > Edit:Deploy > Edit Stage > ExecuteChangeSet > edit
+> Update stackname to `cashly-bot`
 ```
 
 
