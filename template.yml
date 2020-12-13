@@ -13,23 +13,9 @@ Parameters:
   Stage:
     Type: String
     Description: The name for a project pipeline stage, such as Staging or Prod, for which resources are provisioned and deployed.
-    Default: ''
-  DBUsername:
-    NoEcho: 'true'
-    Description: Username for MySQL database access
+    Default: 'Staging'
+  TelegramToken:
     Type: String
-    MinLength: '1'
-    MaxLength: '16'
-    AllowedPattern: '[a-zA-Z][a-zA-Z0-9]*'
-    ConstraintDescription: must begin with a letter and contain only alphanumeric characters.
-  DBPassword:
-    NoEcho: 'true'
-    Description: Password MySQL database access
-    Type: String
-    MinLength: '8'
-    MaxLength: '41'
-    AllowedPattern: '[a-zA-Z0-9]*'
-    ConstraintDescription: must contain only alphanumeric characters.
 Globals:
   Function:
     AutoPublishAlias: live
@@ -39,11 +25,25 @@ Globals:
       Role: !Ref CodeDeployRole
 
 Resources:
+  TelegramTokenSecret:
+    Type: 'AWS::SecretsManager::Secret'
+    Properties:
+      Description: 'Telegram token secret'
+      SecretString: !Ref TelegramToken
+  RDSClusterRotationSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Description: 'RDS cluster secret'
+      GenerateSecretString:
+        SecretStringTemplate: '{"username": "admin"}'
+        GenerateStringKey: 'password'
+        PasswordLength: 16
+        ExcludeCharacters: '"@/\'
   RDSCluster:
     Type: 'AWS::RDS::DBCluster'
     Properties:
-      MasterUsername: !Ref DBUsername
-      MasterUserPassword: !Ref DBPassword
+      MasterUsername: !Sub '{{resolve:secretsmanager:${RDSClusterRotationSecret}::username}}'
+      MasterUserPassword: !Sub '{{resolve:secretsmanager:${RDSClusterRotationSecret}::password}}'
       DBClusterIdentifier: cashly-bot-rds-cluster
       EnableHttpEndpoint: true
       Engine: aurora
@@ -62,7 +62,9 @@ Resources:
       Runtime: nodejs12.x
       Environment:
         Variables:
-          TELEGRAM_TOKEN: '{{resolve:secretsmanager:TelegramToken}}'
+          TELEGRAM_TOKEN: !Sub '{{resolve:secretsmanager:${TelegramTokenSecret}}}'
+          RDS_SECRET_ARN: !Ref RDSClusterRotationSecret
+          RDS_RESOURCE_ARN: !Ref RDSCluster
           NTBA_FIX_319: 1
       Role:
         Fn::GetAtt:
@@ -88,4 +90,3 @@ Resources:
       Path: /
       ManagedPolicyArns:
         - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
-      PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/CodeStar_${ProjectId}_PermissionsBoundary'

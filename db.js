@@ -9,8 +9,8 @@ const rdsDataService = new AWS.RDSDataService()
 
 const createSqlParams = (sql) => {
     return {
-        secretArn: 'arn:aws:secretsmanager:ap-southeast-1:575693935124:secret:rds-db-credentials/cluster-YVNPYBSET57YMFS2FTGOQ2OPZU/admin-Z5EyRV',
-        resourceArn: 'arn:aws:rds:ap-southeast-1:575693935124:cluster:cashly-bot-rds-cluster',
+        secretArn: process.env.RDS_SECRET_ARN ||  'arn:aws:secretsmanager:ap-southeast-1:575693935124:secret:rds-db-credentials/cluster-YVNPYBSET57YMFS2FTGOQ2OPZU/admin-Z5EyRV',
+        resourceArn: process.env.RDS_RESOURCE_ARN || 'arn:aws:rds:ap-southeast-1:575693935124:cluster:cashly-bot-rds-cluster',
         sql: sql,
         database: 'cashly_db',
         includeResultMetadata: true
