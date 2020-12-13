@@ -116,6 +116,10 @@ Update pipeline to update/create cashly-bot stack
 > Update stackname to `cashly-bot`
 ```
 
+Configure webhook for telegram
+```
+npm run setup:webhook
+```
 
 ## Usage
 
