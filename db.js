@@ -121,7 +121,10 @@ module.exports = {
         return await executeSqlStatement(sqlStatement)
     },
     closeConnection: async () => {
-        await connection.end()
+        if (connection !== undefined) {
+            await connection.end()
+        }
+        
         connection = undefined
     }
 }
