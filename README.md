@@ -95,6 +95,7 @@ Add RDS permission to CodeStarWorker
 ```
 aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonRDSDataFullAccess --role-name CodeStarWorker-cashly-bot-ToolChain
 aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/SecretsManagerReadWrite --role-name CodeStarWorker-cashly-bot-ToolChain
+aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/SecretsManagerReadWrite --role-name CodeStar-cashly-bot-ExecutionStaging
 ```
 
 Add Code deploy permission to CodeStarWorker
