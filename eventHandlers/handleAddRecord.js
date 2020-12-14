@@ -6,6 +6,8 @@ const compact = require('lodash/compact')
 const trim = require('lodash/trim')
 const lowerCase = require('lodash/lowerCase')
 const {COMMANDS} = require('../constants')
+const isNaN = require('lodash/isNaN')
+const toNumber = require('lodash/toNumber')
 const sanitizeMessage = require('../utility/sanitizeMessage')
 const formatCurrency = require('../utility/formatCurrency')
 
@@ -61,7 +63,18 @@ const getContentFromReplyMessage = (replyMessage, text) => {
     return res
 }
 
+const validateInputs = (record) => {
 
+    const categories = ["food", "grocery", "gift", "household", "lily", "shopping", "transport", "utility", "entertainment"]
+    if (
+        isNaN(toNumber(get(record, "amount"))) ||
+        !categories.includes(get(record, "category"))
+    ) {
+        throw new Error(`invalid input: ${JSON.stringify(record)}`)
+    }
+
+    return record
+}
 
 module.exports = async (message) => {
     const {name, amount, category} = parseAddText(message.text)
@@ -78,14 +91,15 @@ module.exports = async (message) => {
     }
 
     try {
-        await db.createRecord(
-            message.userId,
-            message.chatId,
-            message.messageId,
-            name,
-            amount,
-            category
-        )
+        const record = validateInputs({
+            userId: message.userId,
+            chatId: message.chatId,
+            messageId: message.messageId,
+            name: name,
+            amount: amount,
+            category: category
+        })
+        await db.createRecord(record)
 
         return {
             message: sanitizeMessage(`${name}, ${formatCurrency(amount)} has been categorised as ${category}`),
@@ -93,10 +107,11 @@ module.exports = async (message) => {
         }
     } catch (e) {
         return {
-            message: `An error has occurred: ${JSON.stringify(e)}`,
+            message: e.message,
         }
     }
 
 }
 
 module.exports.getContentFromReplyMessage = getContentFromReplyMessage
+module.exports.validateInputs = validateInputs

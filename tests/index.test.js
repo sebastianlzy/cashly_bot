@@ -87,7 +87,7 @@ describe('Test index', function() {
           from: [Object],
           chat: [Object],
           date: 1604221367,
-          text: 'What should I categorise seafood, $3.5 belongs as?'
+          text: 'What should I categorise seafood, $3.5 as?'
         },
         text: 'food'
       }

@@ -1,7 +1,7 @@
 'use strict';
 
 const test = require('unit.js');
-const {getContentFromReplyMessage} = require('../../eventHandlers/handleAddRecord')
+const {getContentFromReplyMessage, validateInputs} = require('../../eventHandlers/handleAddRecord')
 
 
 describe('Test handleAddRecord', function() {
@@ -20,5 +20,22 @@ describe('Test handleAddRecord', function() {
         test.undefined(text4)
     })
 
+    it("validate record inputs", async function() {
 
+        const records =
+            [
+                {userId: "123", chatId: "123", messageId: "123", name: "sebastian", amount: "dinner", category: "food"},
+                {userId: "123", chatId: "123", messageId: "123", name: "sebastian", amount: "1.2", category: "groceries"}
+            ]
+
+        records.forEach((record) => {
+            test.error(() => {
+                validateInputs(record)
+            }).match(`invalid input: ${JSON.stringify(record)}`)
+        })
+
+        const record = {userId: "123", chatId: "123", messageId: "123", name: "sebastian", amount: "123", category: "food"}
+        test.object(record).is(record)
+
+    })
 });

@@ -31,9 +31,6 @@ const getMessage = (body) => {
 }
 
 const handleEvent = async (event) => {
-    console.log("--------------------index.js-handleEvent-33-body----------------------------")
-    console.log(JSON.parse(event.body))
-    console.log("--------------------index.js-handleEvent-33-body---------------------------")
     const body = JSON.parse(event.body)
     const message = getMessage(body)
     const replyMessage = get(body, 'message.reply_to_message')

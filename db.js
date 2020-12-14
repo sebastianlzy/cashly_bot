@@ -100,7 +100,7 @@ module.exports = {
             return await executeSqlStatement(sqlStatement)
         }
     },
-    createRecord: async (userId, chatId, messageId, name, amount, category) => {
+    createRecord: async ({userId, chatId, messageId, name, amount, category}) => {
         const sqlStatement = `INSERT INTO records (user_id, chat_id, message_id, name, amount, category) 
                             VALUES ("${userId}", "${chatId}", "${messageId}", "${name}", "${amount}", "${category}")`
         return await executeSqlStatement(sqlStatement)
@@ -124,7 +124,7 @@ module.exports = {
         if (connection !== undefined) {
             await connection.end()
         }
-        
+
         connection = undefined
     }
 }
