@@ -9,7 +9,7 @@ const secretsmanager = new AWS.SecretsManager();
 
 
 const params = {
-    SecretId: "rds-db-credentials/cluster-YVNPYBSET57YMFS2FTGOQ2OPZU/admin",
+    SecretId: "RdsCluster",
     VersionStage: "AWSCURRENT"
 };
 

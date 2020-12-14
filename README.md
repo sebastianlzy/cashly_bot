@@ -25,6 +25,7 @@ Create Secret
 ```
 export TELEGRAM_TOKEN=<TELEGRAM_TOKEN>
 aws secretsmanager create-secret --name TelegramToken --secret-string $TELEGRAM_TOKEN
+aws secretsmanager create-secret --name RdsCluster --secret-string '{"host":"<host>", "port":"3306", "username":"<username>", "password":"<password>","database":"cashly_db"}'
 ```
 
 Deploy application using SAM
@@ -55,18 +56,6 @@ Setting default arguments for 'sam deploy'
 export API_GATEWAY_URL=<API_GATEWAY_URL>
 
 ```
-
-Add environment variable to Code Build
-```
-# Go to https://ap-southeast-1.console.aws.amazon.com/codesuite/codebuild/projects/cashly-bot/edit/environment?region=ap-southeast-1
-> Additional configuration > Add environment variable
-```
-
-| Key | Value |
-|---|---|
-| RDS_SECRET_ARN | `<RDS SECRET ARN>` | 
-| RDS_RESOURCE_ARN | `<RDS_RESOURCE_ARN>` |
-| TELEGRAM_TOKEN | `<TELEGRAM_TOKEN_SECRET_ARN>` |
 
 Create cashly_db
 ```
