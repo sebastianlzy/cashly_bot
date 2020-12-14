@@ -8,6 +8,7 @@ const db = require('../db')
 after(async function() {
   this.timeout(10000)
   await db.deleteRecord("message_id=61 OR message_id=146")
+  await db.closeConnection()
 })
 
 before(async function() {
