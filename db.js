@@ -39,8 +39,6 @@ const getConnection = async () => {
 
         const dbConnectionParams = await getDBConnectionParams()
         connection = mysql.createPool({connectionLimit : 5, ...dbConnectionParams});
-        connection.connect()
-
         return connection
     }
 
