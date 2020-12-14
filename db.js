@@ -19,12 +19,12 @@ const getDBConnectionParams = async () => {
         secretsmanager.getSecretValue(params, function (err, data) {
             if (err) reject(err);
 
-            const secret = JSON.parse(data.SecretString)
+            // const secret = JSON.parse(data.SecretString)
             resolve({
-                host: get(secret, 'host'),
-                user: get(secret, 'username'),
-                password: get(secret, 'password'),
-                database: get(secret, 'database'),
+                host: "cashly-bot-rds-aurora-mysql-cluster.cluster-cahyycnr185u.ap-southeast-1.rds.amazonaws.com",
+                user: "admin",
+                password: "password",
+                database: "cashly_db",
             })
         });
     })
