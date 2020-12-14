@@ -71,7 +71,7 @@ const convertToMd = (aggregatedRecords) => {
 module.exports = async (message) => {
     const {categories} = parseCategoryText(message.text)
     const records = await db.getRecords({
-        conditions: isEmpty(categories) ? undefined : `category in (${categories})`
+        conditions: `user_id=${message.userId}` + isEmpty(categories) ? undefined : `AND category in (${categories})`
     })
 
     const aggregatedRecords = aggregateRecords(records)

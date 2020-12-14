@@ -123,4 +123,3 @@ dist
 
 # AWS
 samconfig.toml
-setup/*

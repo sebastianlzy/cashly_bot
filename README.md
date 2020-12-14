@@ -149,10 +149,20 @@ npm run setup:webhook
 
 `npm run test`
 
+## Screenshots
+
+### Telegram bot
+![Screenshot](./readme-assets/demo-cashly-bot.gif)
+
+### Parents Dashboard
+![Screenshot](./readme-assets/quicksight-dashboard.png)
+
 ## Future improvement
 
-1. 1 stop cloudformation template for all setup
-2. Edit and modify past transactions
-3. Integration with Alexa
+1. Modify to use secret manager for telegram token 
+2. Cloudformation template for all setup
+3. Cloudformation template for dashboard setup
+4. Edit and modify past transactions
+5. Integration with Alexa
 
  

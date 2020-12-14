@@ -14,9 +14,10 @@ const convertToMd = (records) => {
     }, [])).join('\n')
 }
 
-module.exports = async () => {
+module.exports = async (message) => {
     const records = await db.getRecords({
         limit: 10,
+        conditions: `user_id=${message.userId}`,
         orderBy: "created_at desc"
     })
 

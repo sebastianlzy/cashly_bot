@@ -69,9 +69,9 @@ const convertToMd = (aggregatedRecords) => {
     }, []).join("\n\n")
 }
 
-module.exports = async () => {
+module.exports = async (message) => {
     const records = await db.getRecords({
-        conditions: `created_at > "${moment().subtract(7,'d').format('YYYY-MM-DD')}"`
+        conditions: `created_at > "${moment().subtract(7,'d').format('YYYY-MM-DD')} AND user_id=${message.userId}"`
     })
 
     const aggregatedRecords = aggregateRecords(records)

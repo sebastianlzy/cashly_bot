@@ -10,6 +10,7 @@ const {getContentFromReplyMessage} = require('./eventHandlers/handleAddRecord')
 const {COMMANDS} = require('./constants')
 const sanitizeMessage = require('./utility/sanitizeMessage')
 const formatCurrency = require('./utility/formatCurrency')
+const db = require('./db')
 
 const token = process.env.TELEGRAM_TOKEN || "";
 const bot = new TelegramBot(token);
@@ -103,13 +104,14 @@ exports.get = async function (event, context, callback) {
         console.log("--------------------index.js-get-101-handleEventError---------------------------")
     }
 
-    
     const result = {
         statusCode: 200,
         body: "bbt",
         headers: {'content-type': 'text/html'}
     };
-    return Promise.resolve(callback(null, result));
+
+    await db.closeConnection()
+    return callback(null, result);
 };
 
 
