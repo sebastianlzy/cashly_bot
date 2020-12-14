@@ -95,8 +95,14 @@ const handleEvent = async (event) => {
 }
 
 exports.get = async function (event, context, callback) {
+    try {
+        await handleEvent(event)
+    } catch (e) {
+        console.log("--------------------index.js-get-101-handleEventError----------------------------")
+        console.log(e)
+        console.log("--------------------index.js-get-101-handleEventError---------------------------")
+    }
 
-    await handleEvent(event)
     
     const result = {
         statusCode: 200,

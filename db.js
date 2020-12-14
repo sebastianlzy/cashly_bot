@@ -18,10 +18,11 @@ const getDBConnectionParams = async () => {
     return new Promise((resolve, reject) => {
         secretsmanager.getSecretValue(params, function (err, data) {
             if (err) reject(err);
-            console.log("--------------------db.js--21-getDBConnectionParams----------------------------")
-            console.log(data)
-            console.log("--------------------db.js--21-getDBConnectionParams---------------------------")
+
             const secret = JSON.parse(get(data, "SecretString"))
+            console.log("--------------------db.js--21-getDBConnectionParams----------------------------")
+            console.log(secret)
+            console.log("--------------------db.js--21-getDBConnectionParams---------------------------")
             resolve({
                 host: "cashly-bot-rds-aurora-mysql-cluster.cluster-cahyycnr185u.ap-southeast-1.rds.amazonaws.com",
                 user: "admin",
