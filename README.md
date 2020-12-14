@@ -133,17 +133,19 @@ To setup webhook with telegram
 npm run setup:webhook
 ```
 
-
 ## Test
 
 `npm run test`
 
 ## Screenshots
 
+### High level diagram
+![Screenshot](./readme-assets/high-level-diagram.png)
+
 ### Telegram bot
 ![Screenshot](./readme-assets/demo-cashly-bot.gif)
 
-### Parents Dashboard
+### Parents' Dashboard
 ![Screenshot](./readme-assets/quicksight-dashboard.png)
 
 ## Future improvement
